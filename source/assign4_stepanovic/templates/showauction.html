@@ -1,0 +1,27 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+{% load i18n %}
+<html>
+    {% if user.is_staff or auction.state == 'Active'%}
+<head>
+    <title>{% trans 'Auction' %}: {{ title }}</title>
+</head>
+<body>
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+         <br> <br>
+    {% endif %}
+
+    <h1>{{ title }}</h1>
+    <p>{{ description|safe|capfirst }}</p>
+    <p>{{ timestamp }}<p>
+    <form action="/edit/{{ id }}/" method="get">
+    <input type="submit" value="Edit">
+    </form>
+    {% endif%}
+</html>
+</body>

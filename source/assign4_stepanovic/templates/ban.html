@@ -1,0 +1,17 @@
+{% extends "basec.html" %}
+{% load i18n %}
+<h2>Ban auction</h2>>
+
+{% block content %}
+
+<p><b>{% trans 'Ban the auction' %}</b></p>
+<p><b>{{ auction.title }}</b></p>
+    <form action="/confirmban/{{ auction.id }}/" method="post">
+        {%  csrf_token %}
+        <input type="submit" value="Confirm ban">
+    </form>
+    <p>Seller: {{ auction.seller.username }}</p>
+    <p>Description: {{ auction.description }}</p>
+    <p>Minimum price: {{ auction.minimum_price }} EUR</p>
+    <p>Deadline: {{ auction.deadline }}</p>
+{% endblock %}

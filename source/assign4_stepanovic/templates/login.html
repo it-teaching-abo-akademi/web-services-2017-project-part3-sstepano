@@ -1,0 +1,21 @@
+{% extends "basec.html" %}
+{% load i18n %}
+{% block content %}
+
+<p><b>{{ error }}</b></p>
+  {% if form.errors%}
+    <p> Password or username is incorrect </p>
+  {% endif %}
+
+    <form action="" method="post">
+        {% csrf_token %}
+        <label for="username">{% trans 'Username' %} :</label>
+        <input type="text" name="username" value="" id="username">
+        <label for="password">{% trans 'Password' %} :</label>
+        <input type="password" name="password" value="" id="password">
+
+        <input type="submit" value="Submit">
+
+    </form>
+
+{% endblock %}

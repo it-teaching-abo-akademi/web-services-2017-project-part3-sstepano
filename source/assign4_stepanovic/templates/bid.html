@@ -1,0 +1,18 @@
+{% extends "basec.html" %}
+{% load i18n %}
+<h2>Bid on the auction</h2>>
+
+{% block content %}
+
+<p><b>{% trans 'Bid on the auction' %}</b></p>
+<p><b>{{ auction.title }}</b></p>
+    <form name="bidform" action="/updatebid/{{ auction.id }}/" method="post">
+        {%  csrf_token %}
+       <p>New bid: <INPUT TYPE="number" step="0.01" min="0.01" NAME="bid" VALUE=""  placeholder="x.xx"></p>
+        <input type="submit" value="Bid">
+    </form>
+    <p>Seller: {{ auction.seller.username }}</p>
+    <p>Description: {{ auction.description }}</p>
+    <p>Minimum price: {{ auction.minimum_price }} EUR</p>
+    <p>Deadline: {{ auction.deadline }}</p>
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends "basec.html" %}
+{% load i18n %}
+<h2>Edit your auction</h2>>
+
+{% block content %}
+
+<p><b>{% trans 'Edit auction descrription' %}</b></p>
+<p><b>{{ auction.title }}</b></p>
+    <form action="/update/{{ auction.id }}/" method="post">
+        {%  csrf_token %}
+       <p>Description: <textarea name="description" cols="50" rows="20">{{ auction.description }}</textarea></p>
+        <input type="submit" value="Change">
+    </form>
+
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block content %}
+
+{%  for auction in auctions %}
+    {% if user.is_staff or auction.state == 'Active'%}
+    <h2>{{ auction.title }}</h2>
+    {% endif %}
+    {% if user.is_staff and auction.state == 'Active'%}
+        <a href="/edit/{{ auction.id }}/">{% trans 'Edit auction' %}</a>  <a href="/bid/{{ auction.id }}/">{% trans 'Bid on auction' %}</a>  <a href="/ban/{{ auction.id }}/">{% trans 'Ban auction' %}</a>
+    {% elif user.is_authenticated and user.username == auction.seller.username and auction.state == 'Active'%}
+        <a href="/edit/{{ auction.id }}/">{% trans 'Edit auction' %}</a>
+    {% elif  user.is_authenticated and user.username != auction.seller.username  and auction.state == 'Active'%}
+        <a href="/bid/{{ auction.id }}/">{% trans 'Bid on auction' %}</a>
+    {% endif %}
+    {% if user.is_staff or auction.state == 'Active'%}
+    <p>{% trans 'Seller' %}: {{ auction.seller.username }}</p>
+    <p>{% trans 'Description' %}: {{ auction.description }}</p>
+    <p>{% trans 'Minimum price' %}: {{ auction.minimum_price }} {% if option is not None %}{{ option }}{% else %}EUR{% endif %}</p>
+    <p>{% trans 'Deadline' %}: {{ auction.deadline }}</p>
+    {% endif %}
+{% empty %}
+    <p>No Auctions<p>
+{%  endfor %}
+{% endblock %}

@@ -1,0 +1,7 @@
+{% load i18n %}
+{% autoescape off %}
+{% trans 'Hi' %} {{ user.username }},
+{% trans 'Please click on the link to see your auction' %},
+
+http://{{ domain }}{% url 'show' id=auction.id %}
+{% endautoescape %}

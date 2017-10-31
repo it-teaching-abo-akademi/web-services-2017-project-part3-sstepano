@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block content %}
+
+{%  for auction in auctions %}
+    {% if user.is_staff or auction.state == 'Active'%}
+    <h2>{{ auction.title }}</h2> <a href="/edit/{{ auction.id }}/">Edit auction</a>
+    <p>Description: {{ auction.description }}</p>
+    <p>Minimum price: {{ auction.minimum_price }}</p>
+    <p>Deadline: {{ auction.deadline }}</p>
+    {% endif %}
+{% empty %}
+    <p>No Auctions<p>
+{%  endfor %}
+{% endblock %}

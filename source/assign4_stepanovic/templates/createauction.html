@@ -1,0 +1,18 @@
+{% extends "basec.html" %}
+{% load i18n %}
+<h2>Create Auction</h2>
+
+{% block content %}
+<p><b>{% trans 'Create Auction' %}</b></p>
+  {% if error%}
+  <p> <b>{{ error }}</b> </p>
+    {% endif %}
+
+
+    <form action="/createauction/" method="post">
+        {% csrf_token %}
+         {{ form.as_p }}
+        <input type="submit" value="Submit">
+    </form>
+
+{% endblock %}

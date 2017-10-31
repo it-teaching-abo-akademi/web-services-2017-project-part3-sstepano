@@ -1,0 +1,58 @@
+{% load i18n %}
+<html>
+<style type= "text/css">
+    body {color: #efd; background: #453; padding: 0 5em; margin:0}
+    h1 {padding: 2em 1em; background: #675}
+    h2 {color: #bf8; border-top: 1px dotted #fff; margin-top: 2em}
+    p {margin: 1em 0}
+    a {color: red}
+</style>
+<body>
+<h1>{% trans 'Auction Site' %}</h1>
+
+    <br>
+    <b><a href="/auction/">{% trans 'Home' %}</a>
+        {% if user.is_authenticated %}
+            <a href="/logout/">{% trans 'Logout' %}</a>
+        {% else %}
+            <a href="/login/">{% trans 'Login' %}</a>
+        {% endif %}
+
+        <!--<nav><nav>
+            <a href="/set_lang/en/">EN</a>
+            <a href="/set_lang/fi/">FI</a>
+            <a href="/set_lang/sr">SR</a>
+        </nav>-->
+    </b>
+<form action="{% url 'myset_language' %}" method="post">{% csrf_token %}
+    <input name="next" type="hidden" value="{{ redirect_to }}" />
+    <select name="language">
+        {% get_current_language as LANGUAGE_CODE %}
+        {% get_available_languages as LANGUAGES %}
+        {% get_language_info_list for LANGUAGES as languages %}
+        {% for language in languages %}
+            {% if language.code == 'en' or language.code == 'fi' or language.code == 'sr' %}
+            <option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %} selected{% endif %}>
+                {{ language.name_local }} ({{ language.code }})
+            </option>
+            {% endif %}
+        {% endfor %}
+    </select>
+    <input type="submit" value={% trans "Go" %} />
+</form>
+<br><br>
+    <br> <br>
+
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+{% block content %}
+{% endblock %}
+
+</body>
+</html>
